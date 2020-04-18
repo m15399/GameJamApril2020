@@ -16,8 +16,9 @@ function main(){
 	// Initialization.
 	g_canvas.appendToDocument();
 
-	// Testing!
-	new TestBlock();
+	// Set up the scene.
+	new Titanic();
+	new Iceberg();
 
 	// Call mainLoop 30 times/sec.
 	window.setInterval(mainLoop, 1000/30);
