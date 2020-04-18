@@ -3,12 +3,12 @@
 class GameObject {
 
 	constructor(){
-		g_allGameObjects.add(this);
+		newGameObjects.push(this);
 	}
 
 	// Call this to remove the object from the game.
 	destroy(){
-		g_allGameObjects.delete(this);
+		deletedGameObjects.push(this);
 	}
 
 	// Overridden by subclasses.
@@ -25,7 +25,22 @@ class GameObject {
 
 const g_allGameObjects = new Set();
 
+let newGameObjects = [];
+let deletedGameObjects = [];
+
 function updateAllGameObjects(){
+	// Delete deleted game objects.
+	for(let i = 0; i < deletedGameObjects.length; i++){
+		g_allGameObjects.delete(deletedGameObjects[i]);
+	}
+	deletedGameObjects = [];
+
+	// Add new game objects
+	for(let i = 0; i < newGameObjects.length; i++){
+		g_allGameObjects.add(newGameObjects[i]);
+	}
+	newGameObjects = [];
+
 	g_allGameObjects.forEach((o) => o.update());
 }
 
