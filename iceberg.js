@@ -7,6 +7,7 @@ class Iceberg extends GameObject {
 	}
 
 	update(){
+
 		const v = 10;
 		if (g_input.keysDown['w']){
 			this.y -= v;
@@ -19,6 +20,9 @@ class Iceberg extends GameObject {
 		}
 		if (g_input.keysDown['d']){
 			this.x += v;
+		}
+		if (g_input.keysDown[' ']){
+			
 		}
 
 	}
