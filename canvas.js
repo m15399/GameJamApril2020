@@ -1,0 +1,19 @@
+
+class Canvas {
+
+	constructor(width, height){
+		this.width = width;
+		this.height = height;
+
+		this.canvas = document.createElement('canvas');
+		this.canvas.width = width;
+		this.canvas.height = height;
+		this.context = this.canvas.getContext('2d');
+	}
+
+	appendToDocument(){
+		document.body.appendChild(this.canvas);
+	}
+}
+
+const g_canvas = new Canvas(800, 600);
