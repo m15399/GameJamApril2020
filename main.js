@@ -1,4 +1,3 @@
-
 function mainLoop(){
 
 	updateTime();
@@ -18,13 +17,13 @@ function main(){
 	// Initialization.
 	g_canvas.appendToDocument();
 
-	// Set up the scene.
-	// new Titanic();
 	new MechaTitanic();
-	new Iceberg();
 
-	// Call mainLoop 30 times/sec.
+  // Call mainLoop 30 times/sec.
 	window.setInterval(mainLoop, 1000/30);
 }
 
 window.onload = main;
+// set up the scene
+const iceberg = new Iceberg();
+const titanic = new Titanic();
