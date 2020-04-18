@@ -5,6 +5,7 @@ class Iceberg extends GameObject {
 		this.x = g_canvas.width / 2;
 		this.y = 500;
 		this.cooldown = 0;
+		this.health = 100;
 	}
 
 	update(){
@@ -23,7 +24,7 @@ class Iceberg extends GameObject {
 			this.x += v;
 		}
 		if (g_input.keysDown[' '] && this.cooldown <= 0){
-			new PlayerBullet();
+			new PlayerBullet(this.x, this.y);
 			this.cooldown = 5;
 		}
 		this.cooldown--;

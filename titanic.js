@@ -10,10 +10,21 @@ class Titanic extends GameObject {
 		this.xOffset = 0;
 		this.yOffset = 0;
 		this.rOffset = 0;
+		this.cooldown = 5;
+		this.health = 1000;
 	}
 
 	update(){
+		//this.yOffset = Math.min(g_time * 70 - 700, -20);
+		// console.log(this.y);
+		this.xOffset = Math.sin(g_time * 2) * 20;
 
+		if (this.cooldown <= 0) {
+			new EnemyBullet(this.x + this.xOffset, this.y + this.yOffset);
+			this.cooldown = 10;
+		}
+
+		this.cooldown--;
 	}
 
 	draw(g){
@@ -25,7 +36,7 @@ class Titanic extends GameObject {
 		let w = 40;
 		let h = 80;
 		g.fillRect(-w/2, -h/2, w, h);
-		
+
 		g.restore();
 	}
 }

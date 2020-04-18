@@ -1,25 +1,25 @@
-class PlayerBullet extends GameObject {
-   constructor(){
+class EnemyBullet extends GameObject {
+   constructor(x, y){
 		super();
-      this.x = iceberg.x;
-      this.y = iceberg.y;
+      this.x = x;
+      this.y = y;
 	}
 
    isOffscreen() {
-      if (this.y < 0) {
+      if (this.y > g_canvas.height) {
          return true;
       }
    }
 
    update(){
-      this.y = this.y - 10;
+      this.y = this.y + 10;
       if (this.isOffscreen()) {
          this.destroy();
       }
    }
 
    draw(g){
-		g.fillStyle = 'blue';
+		g.fillStyle = 'red';
 		g.fillRect(this.x, this.y, 10, 10);
 	}
 }

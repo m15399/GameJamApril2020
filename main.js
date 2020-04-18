@@ -17,7 +17,7 @@ function main(){
 	// Initialization.
 	g_canvas.appendToDocument();
 
-	new MechaTitanic();
+	//new MechaTitanic();
 
   // Call mainLoop 30 times/sec.
 	window.setInterval(mainLoop, 1000/30);
