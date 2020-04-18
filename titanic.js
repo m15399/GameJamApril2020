@@ -5,6 +5,8 @@ class Titanic extends GameObject {
 		this.x = g_canvas.width/2;
 		this.y = 200;
 		this.r = 0;
+		this.w = 40;
+		this.h = 80;
 
 		// Makes it easier to draw MechaTitanic.
 		this.xOffset = 0;
@@ -24,6 +26,10 @@ class Titanic extends GameObject {
 			this.cooldown = 10;
 		}
 
+		if (this.health < 0) {
+			this.destroy();
+		}
+
 		this.cooldown--;
 	}
 
@@ -33,10 +39,12 @@ class Titanic extends GameObject {
 		g.translate(this.x + this.xOffset, this.y + this.yOffset);
 		g.rotate(degreesToRadians(this.r + this.rOffset));
 
-		let w = 40;
-		let h = 80;
-		g.fillRect(-w/2, -h/2, w, h);
+		g.fillRect(-this.w/2, -this.h/2, this.w, this.h);
 
 		g.restore();
+	}
+
+	hit(damage) {
+		this.health -= damage;
 	}
 }
