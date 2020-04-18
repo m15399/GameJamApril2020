@@ -4,6 +4,7 @@ class Iceberg extends GameObject {
 		super();
 		this.x = g_canvas.width / 2;
 		this.y = 500;
+		this.cooldown = 0;
 	}
 
 	update(){
@@ -21,10 +22,11 @@ class Iceberg extends GameObject {
 		if (g_input.keysDown['d']){
 			this.x += v;
 		}
-		if (g_input.keysDown[' ']){
-			
+		if (g_input.keysDown[' '] && this.cooldown <= 0){
+			new PlayerBullet();
+			this.cooldown = 5;
 		}
-
+		this.cooldown--;
 	}
 
 	draw(g){
