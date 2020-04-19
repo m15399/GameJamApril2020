@@ -49,3 +49,7 @@ function clamp(x, a, b){
 function randomRange(a, b){
 	return a + Math.random() * (b - a);
 }
+
+function isDebugView(){
+	return g_input.keysDown['`'];
+}

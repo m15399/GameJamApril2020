@@ -17,8 +17,8 @@ class Canvas {
 		this.context = this.canvas.getContext('2d');
 	}
 
-	appendToDocument(){
-		document.body.appendChild(this.canvas);
+	appendToDocument(parentNode){
+		parentNode.appendChild(this.canvas);
 	}
 }
 

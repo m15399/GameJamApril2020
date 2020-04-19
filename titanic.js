@@ -14,13 +14,13 @@ function createBlueBullet(){
 	return b;
 }
 
-class Titanic extends GameObject {
+class Titanic extends Enemy {
 	constructor(){
 		super();
 		this.x = 0;
 		this.y = 0;
-		this.w = 40;
-		this.h = 80;
+		this.w = 60;
+		this.h = this.w * 2;
 		this.r = 0;
 
 		this.followTarget = false;
@@ -29,13 +29,15 @@ class Titanic extends GameObject {
 		this.targetX = 0;
 		this.targetY = 0;
 
-		this.health = 10000;
+		this.health = 100;
 		this.hitThisFrame = false;
 
 		this.sprite = g_resources.get('titanic.png');
-
+		this.spriteWidth = this.w * 2; // How big to actually draw the sprite.
+		this.spriteHeight = this.spriteWidth * 2;
+		this.hitOverlayCanvas = new Canvas(this.spriteWidth, this.spriteHeight);
+		
 		this.script = new Script();
-		this.startTitanicBossScript();
 	}
 
 	startTitanicBossScript(){
@@ -45,20 +47,27 @@ class Titanic extends GameObject {
 		let gun1, gun2;
 
 		const baseX = g_canvas.width / 2;
-		const baseY = 100;
+		const baseY = 140;
 
 		that.x = baseX;
-		that.y = -that.h / 2 - 20;
-		that.followTarget = true;
-		that.followTargetSpeed = that.defaultFollowTargetSpeed/2;
-		that.targetX = that.x;
-		that.targetY = 80;
+		that.y = -that.h * 1;
 
 		script.after(5, function(){
+			g_game.iceberg.weaponDisabled = true;
+
+			that.followTarget = true;
+			that.followTargetSpeed = that.defaultFollowTargetSpeed * .7;
+			that.targetX = that.x;
+			that.targetY = baseY;
+			g_game.startMildShake(1);
+
+		}).after(6.2, function(){
 			that.followTargetSpeed = that.defaultFollowTargetSpeed;
+			g_game.stopMildShake();
+			g_game.iceberg.weaponDisabled = false;
 
 		}).loopBegin()
-		.after(.5, function(){
+		.after(0, function(){
 			gun1 = new Gun(that, .03, createEnemyBullet);
 			gun1.xOffset = 20;
 			gun1.yOffset = 30;
@@ -99,33 +108,50 @@ class Titanic extends GameObject {
 	}
 
 	draw(g){
-		g.fillStyle = '#aaa';
-		if (this.hitThisFrame){
-			g.fillStyle = 'white';
-			this.hitThisFrame = false;
-		}
-
 		g.save();
 		g.translate(this.x, this.y);
 		g.rotate(degreesToRadians(this.r));
 
-		const imageWidth = 80;
-		const imageHeight = imageWidth * 2
+		// Draw ship.
 		g.drawImage(
-			this.sprite,
-			-imageWidth/2 + imageWidth * 0,
-			-imageHeight/2 + imageHeight * 0,
-			imageWidth,
-			imageHeight);
+			this.sprite, 
+			-this.spriteWidth/2, 
+			-this.spriteHeight/2, 
+			this.spriteWidth,
+			this.spriteHeight);
 
-		// Hitbox.
-		g.strokeStyle = 'white';
-		// g.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
+		// Draw on-hit overlay.
+		const g2 = this.hitOverlayCanvas.context;
+		g2.clearRect(0, 0, this.hitOverlayCanvas.width, this.hitOverlayCanvas.height);
+	
+		if (this.hitThisFrame){
+			g2.drawImage(this.sprite, 0, 0, this.spriteWidth, this.spriteHeight);
+			g2.save();
+			g2.globalCompositeOperation = 'source-in';
+			g2.fillStyle = 'rgba(255, 255, 255, .47)';
+			g2.fillRect(0, 0, this.hitOverlayCanvas.width, this.hitOverlayCanvas.height);
+			g2.restore();
+			this.hitThisFrame = false;
+		}
+
+		g.drawImage(
+			this.hitOverlayCanvas.canvas, 
+			-this.hitOverlayCanvas.width/2, 
+			-this.hitOverlayCanvas.height/2, 
+			this.hitOverlayCanvas.width, 
+			this.hitOverlayCanvas.height);
+
+		// Draw hitbox.
+		if (isDebugView()){
+			g.strokeStyle = 'white';
+			g.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
+		}
 
 		g.restore();
 	}
 
 	hit(damage) {
+		// console.log('ow!');
 		this.health -= damage;
 		this.hitThisFrame = true;
 	}

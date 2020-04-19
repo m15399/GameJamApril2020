@@ -3,17 +3,18 @@ class Iceberg extends GameObject {
 	constructor(){
 		super();
 		this.x = g_canvas.width / 2;
-		this.y = 500;
-		this.w = 20;
-		this.h = 20;
+		this.y = g_canvas.height - 100;
+		this.w = 40;
+		this.h = this.w;
 
 		this.health = 100;
-		this.hitThisFrame = false;
+
+		this.weaponDisabled = false;
 
 		this.gun = new Gun(this, .1, function(x, y){
 			const b = new Bullet();
-			b.w = 30;
-			b.h = 8;
+			b.w = 40;
+			b.h = 10;
 			b.v = 900;
 			b.damage = 10;
 			b.color = '#aef';
@@ -21,14 +22,14 @@ class Iceberg extends GameObject {
 			return b;
 		});
 		this.gun.r = -90;
-		this.gun.angleJitter = 1;
+		this.gun.angleJitter = 2;
 
 		this.sprite = g_resources.get('berg.png');
 	}
 
 	update(){
 
-		this.gun.firing = g_input.keysDown[' '];
+		this.gun.firing = !this.weaponDisabled && g_input.keysDown[' '];
 
 		const moveSpeed = 290 * g_dt;
 		if (g_input.keysDown['w'] || g_input.keysDown['ArrowUp']){
@@ -50,7 +51,7 @@ class Iceberg extends GameObject {
 
 	draw(g){
 
-		const imageWidth = 45;
+		const imageWidth = this.w * 2.25;
 		g.drawImage(
 			this.sprite,
 			this.x - imageWidth/2 + imageWidth * -.05,
@@ -59,11 +60,15 @@ class Iceberg extends GameObject {
 			imageWidth);
 		
 		// Hitbox.
-		g.strokeStyle = 'white';
-		// g.strokeRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+		if (isDebugView()){
+			g.strokeStyle = 'white';
+			g.strokeRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+		}
 	}
 
 	hit(){
-		this.hitThisFrame = true;
+		g_game.playerHit = true;
+		g_game.frameFreeze = 3;
+		g_game.shake(.1);
 	}
 }

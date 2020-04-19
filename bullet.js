@@ -24,10 +24,13 @@ class Bullet extends GameObject {
 		}
 
 		if (this.playerBullet){
-			if (collided(g_game.boss, this)) {
-				g_game.boss.hit(this.damage);
-				this.destroy();
-			}
+			const that = this;
+			g_game.forAllEnemies(function(enemy){
+				if (!that.destroyed && collided(enemy, that)) {
+					enemy.hit(that.damage);
+					that.destroy();
+				}
+			});
 		} else {
 			if (collided(g_game.iceberg, this)) {
 				g_game.iceberg.hit(this.damage);
