@@ -62,8 +62,15 @@ function mainLoop(){
 	window.requestAnimationFrame(mainLoop);
 }
 
+let mainCalled = false;
 function main(){
+	if (mainCalled){
+		return;
+	}
+	mainCalled = true;
+
 	const gameContainer = document.getElementById('game');
+	gameContainer.innerHTML = '';
 	g_canvas.appendToDocument(gameContainer);
 
 	//new MechaTitanic();
@@ -75,4 +82,4 @@ function main(){
 	mainLoop();
 }
 
-window.onload = main;
+// window.onload = main;
