@@ -75,6 +75,8 @@ function main(){
 	g_resources.loadImage('berg.png');
 	g_resources.loadImage('titanic.png');
 	g_resources.loadAudio('music.mp3');
+	g_resources.loadImage('title.png');
+	g_resources.loadImage('water-bg-small.png');
 
 	mainLoop();
 }

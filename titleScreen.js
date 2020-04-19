@@ -8,7 +8,7 @@ class TitleScreen extends Enemy {
 		this.pressSpaceText = '';
 
 		this.okToStart = false;
-
+		this.sprite = g_resources.get('title.png');
 		this.script = new Script();
 		const that = this;
 		this.script.after(1, function(){
@@ -31,6 +31,12 @@ class TitleScreen extends Enemy {
 	}
 
 	draw(g){
+		g.drawImage(
+			this.sprite,
+			0,
+			0,
+			800,
+			800);
 		g.fillStyle = 'white';
 		g.font = '20px Arial';
 		g.save();

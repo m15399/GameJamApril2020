@@ -18,6 +18,10 @@ class Game {
 
 	startLevel(number){
 
+		if (!this.ocean) {
+			this.ocean = new Ocean();
+		}
+
 		if (!this.iceberg){
 			this.iceberg = new Iceberg();
 		}
@@ -93,7 +97,7 @@ class Game {
 		const furosity =  5;
 		if (this.screenShakeTime > 0){
 			g.translate(
-				randomRange(-furosity, furosity), 
+				randomRange(-furosity, furosity),
 				randomRange(-furosity, furosity));
 			this.screenShakeTime -= g_dt;
 		}
@@ -101,7 +105,7 @@ class Game {
 		const mildFurosity =  1.6 * this.mildScreenShake;
 		if (this.mildScreenShake){
 			g.translate(
-				randomRange(-mildFurosity, mildFurosity), 
+				randomRange(-mildFurosity, mildFurosity),
 				randomRange(-mildFurosity, mildFurosity));
 		}
 	}
