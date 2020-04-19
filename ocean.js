@@ -11,11 +11,12 @@ class Ocean extends GameObject {
       this.x--;
       this.y--;
 
-      if (this.x < -80) {
-         this.x += 80;
+      var s = 160;
+      if (this.x < -s) {
+         this.x += s;
       }
-      if (this.y < -80) {
-         this.y += 80;
+      if (this.y < -s) {
+         this.y += s;
       }
    }
 

@@ -27,7 +27,7 @@ class EndGameScreen extends Enemy {
 		g.textAlign = 'center';
 
 		let x = g_canvas.width / 2;
-		let y = g_canvas.height / 2;
+		let y = g_canvas.height / 3;
 		g.fillText(this.text1, x, y);
 		y += 25;
 		g.fillText(this.text2, x, y);
