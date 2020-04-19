@@ -22,6 +22,8 @@ class Iceberg extends GameObject {
 		});
 		this.gun.r = -90;
 		this.gun.angleJitter = 1;
+
+		this.sprite = g_resources.get('berg.png');
 	}
 
 	update(){
@@ -47,8 +49,18 @@ class Iceberg extends GameObject {
 	}
 
 	draw(g){
-		g.fillStyle = 'white';
-		g.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+
+		const imageWidth = 45;
+		g.drawImage(
+			this.sprite,
+			this.x - imageWidth/2,
+			this.y - imageWidth/2 - imageWidth/4,
+			imageWidth,
+			imageWidth);
+		
+		// Hitbox.
+		// g.fillStyle = 'white';
+		// g.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
 	}
 
 	hit(){
