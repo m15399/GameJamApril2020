@@ -29,6 +29,23 @@ class Resources {
 		
 		image.src = this.basePath + name;
 	}
+
+	loadAudio(name){
+		const audio = new Audio(this.basePath + name);
+		const resource = {
+			resource: audio,
+			loaded: false
+		};
+
+		this.resources[name] = resource;
+		this.numResources++;
+
+		const that = this;
+		audio.onload = function(){
+			resource.loaded = true;
+		}
+			that.numLoaded++;
+	}
 }
 
 const g_resources = new Resources();

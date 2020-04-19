@@ -32,6 +32,8 @@ class Titanic extends GameObject {
 		this.health = 10000;
 		this.hitThisFrame = false;
 
+		this.sprite = g_resources.get('titanic.png');
+
 		this.script = new Script();
 		this.startTitanicBossScript();
 	}
@@ -43,7 +45,7 @@ class Titanic extends GameObject {
 		let gun1, gun2;
 
 		const baseX = g_canvas.width / 2;
-		const baseY = 80;
+		const baseY = 100;
 
 		that.x = baseX;
 		that.y = -that.h / 2 - 20;
@@ -107,7 +109,18 @@ class Titanic extends GameObject {
 		g.translate(this.x, this.y);
 		g.rotate(degreesToRadians(this.r));
 
-		g.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+		const imageWidth = 80;
+		const imageHeight = imageWidth * 2
+		g.drawImage(
+			this.sprite,
+			-imageWidth/2 + imageWidth * 0,
+			-imageHeight/2 + imageHeight * 0,
+			imageWidth,
+			imageHeight);
+
+		// Hitbox.
+		g.strokeStyle = 'white';
+		// g.strokeRect(-this.w/2, -this.h/2, this.w, this.h);
 
 		g.restore();
 	}
