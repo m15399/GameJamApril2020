@@ -22,4 +22,4 @@ class Canvas {
 	}
 }
 
-const g_canvas = new Canvas(800, 600);
+const g_canvas = new Canvas(800, 800);

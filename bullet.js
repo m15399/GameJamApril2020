@@ -14,8 +14,8 @@ class Bullet extends GameObject {
 
 	update(){
 		const rads = degreesToRadians(this.r);
-		const xv = Math.cos(rads) * this.v;
-		const yv = Math.sin(rads) * this.v;
+		const xv = Math.cos(rads) * this.v * g_dt;
+		const yv = Math.sin(rads) * this.v * g_dt;
 		this.x += xv;
 		this.y += yv;
 
@@ -29,7 +29,10 @@ class Bullet extends GameObject {
 				this.destroy();
 			}
 		} else {
-
+			if (collided(iceberg, this)) {
+				iceberg.hit(this.damage);
+				this.destroy();
+			}
 		}
    }
 

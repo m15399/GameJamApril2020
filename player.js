@@ -6,25 +6,29 @@ class Iceberg extends GameObject {
 		this.y = 500;
 		this.w = 20;
 		this.h = 20;
-		this.cooldown = 0;
-		this.health = 100;
 
-		this.gun = new Gun(this, 3, function(x, y){
+		this.health = 100;
+		this.hitThisFrame = false;
+
+		this.gun = new Gun(this, .1, function(x, y){
 			const b = new Bullet();
 			b.w = 30;
 			b.h = 8;
-			b.v = 22;
+			b.v = 900;
 			b.damage = 10;
 			b.color = '#aef';
 			b.playerBullet = true;
 			return b;
 		});
 		this.gun.r = -90;
+		this.gun.angleJitter = 1;
 	}
 
 	update(){
 
-		const moveSpeed = 10;
+		this.gun.firing = g_input.keysDown[' '];
+
+		const moveSpeed = 290 * g_dt;
 		if (g_input.keysDown['w'] || g_input.keysDown['ArrowUp']){
 			this.y -= moveSpeed;
 		}
@@ -38,11 +42,16 @@ class Iceberg extends GameObject {
 			this.x += moveSpeed;
 		}
 
-		this.gun.firing = g_input.keysDown[' '];
+		this.x = clamp(this.x, this.w/2, g_canvas.w - this.w/2);
+		this.y = clamp(this.y, this.h/2, g_canvas.h - this.h/2);
 	}
 
 	draw(g){
 		g.fillStyle = 'white';
 		g.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+	}
+
+	hit(){
+		this.hitThisFrame = true;
 	}
 }
