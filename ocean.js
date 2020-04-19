@@ -21,7 +21,9 @@ class Ocean extends GameObject {
 
    draw(g) {
       //console.log("drawing ocean");
-      this.pattern = g.createPattern(this.sprite, "repeat");
+      if (!this.pattern)
+         this.pattern = g.createPattern(this.sprite, "repeat");
+      
       g.fillStyle = this.pattern;
       g.save();
       g.translate(this.x, this.y);
