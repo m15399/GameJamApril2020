@@ -4,11 +4,13 @@ class GameObject {
 
 	constructor(){
 		newGameObjects.push(this);
+		this.destroyed = false;
 	}
 
 	// Call this to remove the object from the game.
 	destroy(){
 		deletedGameObjects.push(this);
+		this.destroyed = true;
 	}
 
 	// Overridden by subclasses.
@@ -40,6 +42,8 @@ function updateAllGameObjects(){
 		g_allGameObjects.add(newGameObjects[i]);
 	}
 	newGameObjects = [];
+
+	// console.log('Num game objects:', g_allGameObjects.size);
 
 	g_allGameObjects.forEach((o) => o.update());
 }
