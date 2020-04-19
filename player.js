@@ -4,21 +4,22 @@ class Iceberg extends GameObject {
 		super();
 		this.x = g_canvas.width / 2;
 		this.y = 500;
-		this.w = 30;
-		this.h = 30;
+		this.w = 20;
+		this.h = 20;
 		this.cooldown = 0;
 		this.health = 100;
 
 		this.gun = new Gun(this, 3, function(x, y){
 			const b = new Bullet();
-			b.w = 8;
-			b.h = 30;
-			b.v = -20;
-			b.damage = 100;
-			b.color = '#7ef';
+			b.w = 30;
+			b.h = 8;
+			b.v = 22;
+			b.damage = 10;
+			b.color = '#aef';
 			b.playerBullet = true;
 			return b;
 		});
+		this.gun.r = -90;
 	}
 
 	update(){
