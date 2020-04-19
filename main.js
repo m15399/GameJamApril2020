@@ -21,11 +21,12 @@ function mainLoop(){
 	}
 
 	const g = g_canvas.context;
+	// Clear screen.
+	g.fillStyle = '#14a';
+	g.fillRect(0, 0, g_canvas.width, g_canvas.height);
 
 	if (loadingResources){
 		// Draw loading screen, but only if it's taking a long time to load stuff.
-		g.fillStyle = 'black';
-		g.fillRect(0, 0, g_canvas.width, g_canvas.height);
 		if (g_time > 1){
 			g.fillStyle = 'white';
 			g.font = '20px Arial';
@@ -44,10 +45,6 @@ function mainLoop(){
 
 		updateAllGameObjects();
 		g_game.update();
-
-		// Clear screen.
-		g.fillStyle = '#14a';
-		g.fillRect(0, 0, g_canvas.width, g_canvas.height);
 
 		g_game.preDraw(g);
 
