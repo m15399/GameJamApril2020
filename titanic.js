@@ -79,7 +79,7 @@ class Titanic extends Enemy {
 
 		}).loopBegin()
 		.after(0, function(){
-			gun1 = new Gun(that, .03, createEnemyBullet);
+			gun1 = new Gun(that, .06, createEnemyBullet);
 			gun1.xOffset = 20;
 			gun1.yOffset = 30;
 			gun1.startSweep(90, 120, 210);

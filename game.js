@@ -18,13 +18,16 @@ class Game {
 
 	startLevel(number){
 
-		if (!this.ocean) {
-			this.ocean = new Ocean();
+		if (number > 0){
+			if (!this.ocean) {
+				this.ocean = new Ocean();
+			}
+
+			if (!this.iceberg){
+				this.iceberg = new Iceberg();
+			}
 		}
 
-		if (!this.iceberg){
-			this.iceberg = new Iceberg();
-		}
 
 		// Clear enemy bullets so you don't die.
 		forAllGameObjectsOfType('Bullet', function(b){

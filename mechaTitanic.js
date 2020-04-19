@@ -27,7 +27,7 @@ class MechaTitanic extends Enemy {
 			titanic.y = y + g_canvas.height/2 - 140;
 			titanic.r = r;
 
-			titanic.health = 50;
+			titanic.health = 500;
 
 			titanic.useInitialPlusOffset = true;
 			titanic.initialX = titanic.x;
