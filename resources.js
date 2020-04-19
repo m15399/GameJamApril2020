@@ -41,10 +41,12 @@ class Resources {
 		this.numResources++;
 
 		const that = this;
-		audio.onload = function(){
+		// audio.onload = function(){
+		audio.addEventListener('loadeddata', function(){
 			resource.loaded = true;
-		}
 			that.numLoaded++;
+		});
+		// }
 	}
 }
 
