@@ -17,33 +17,79 @@ function createBlueBullet(){
 class Titanic extends GameObject {
 	constructor(){
 		super();
-		this.x = g_canvas.width/2;
-		this.y = 70;
+		this.x = 0;
+		this.y = 0;
 		this.w = 40;
 		this.h = 80;
 		this.r = 0;
 
+		this.followTarget = false;
+		this.targetX = 0;
+		this.targetY = 0;
+
 		this.health = 1000;
 
-		this.gun1 = new Gun(this, 1, createEnemyBullet);
-		this.gun1.xOffset = 20;
-		this.gun1.yOffset = 30;
-		this.gun1.startSweep(90, 120, 7);
-		// this.gun3 = new Gun(this, 2, createEnemyBullet);
-		// this.gun3.xOffset = -20;
-		// this.gun3.yOffset = 30;
-		// this.gun3.startSweep(90, 120, 7);
+		this.script = new Script();
+		this.startTitanicBossScript();
 
-		this.gun2 = new Gun(this, 6, createBlueBullet);
-		this.gun2.xOffset = -20;
-		this.gun2.yOffset = 30;
-		this.gun2.startShotgun(8, 90);
+
+	}
+
+	startTitanicBossScript(){
+
+		const that = this;
+		const script = this.script;
+		let gun1, gun2;
+
+		const baseX = g_canvas.width / 2;
+		const baseY = 80;
+		that.x = g_canvas.width/2;
+		that.y = -that.h / 2 - 20;
+		that.followTarget = true;
+		that.targetX = that.x;
+		that.targetY = 80;
+
+		script.after(50, function(){
+			that.yv = 0;
+
+		}).after(30)
+		.loopBegin()
+		.after(0, function(){
+			// console.log('shooting stuff!');
+		}).after(10, function(){
+			gun1 = new Gun(that, 1, createEnemyBullet);
+			gun1.xOffset = 20;
+			gun1.yOffset = 30;
+			gun1.startSweep(90, 120, 7);
+
+		}).after(60, function(){
+			gun2 = new Gun(that, 6, createBlueBullet);
+			gun2.xOffset = -20;
+			gun2.yOffset = 30;
+			gun2.startShotgun(8, 90);
+
+		}).after(60, function(){
+			gun1.destroy();
+			gun2.destroy();
+			
+		}).after(30, function(){
+			that.targetX = baseX + 90;
+
+		}).after(30, function(){
+			that.targetX = baseX;
+			that.targetY = baseY;
+
+		}).loop();
 	}
 
 	update(){
-		//this.yOffset = Math.min(g_time * 70 - 700, -20);
-		// console.log(this.y);
-		this.x += Math.sin(g_time * 2) * 2;
+		this.script.update();
+
+		if (this.followTarget){
+			const maxV = 3;
+			this.x = moveTowards(this.x, this.targetX, maxV);
+			this.y = moveTowards(this.y, this.targetY, maxV);
+		}
 
 		if (this.health < 0) {
 			this.destroy();
