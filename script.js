@@ -3,9 +3,9 @@
 //
 // Usage:
 //   const script = new Script();
-//   script.after(delayInFrames, function(){
+//   script.after(delayInSec, function(){
 //       doSomething();
-//   }).after(nextDelayInFrames, function(){
+//   }).after(delayInSec, function(){
 //       doSomethingElse();
 //   }).after(...)
 //
@@ -45,19 +45,22 @@ class Script {
 	}
 
 	update(){
-		this.currDelay++;
 
-		// while (this.currStep < this.steps.length){
+		this.currDelay += g_dt;
+		
+		while(this.currStep < this.steps.length){
+
 			const nextStep = this.steps[this.currStep];
 			const nextDelay = nextStep.delay ? nextStep.delay : 0;
+
 			if (this.currDelay >= nextDelay){
-
 				this.executeNextStep();
-
 				this.currStep++;
-				this.currDelay = 0;
+				this.currDelay -= nextDelay;
+			} else {
+				break;
 			}
-		// }
+		}
 	}
 }
 

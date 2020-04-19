@@ -12,6 +12,8 @@ class Gun extends GameObject {
 		this.y = this.parentObject.y + this.yOffset;
 		this.r = 90;
 
+		this.angleJitter = 0;
+
 		this.sweeping = false;
 		this.sweepDirection = 1;
 		this.sweepMidAngle = 0;
@@ -53,14 +55,14 @@ class Gun extends GameObject {
 
 		if (this.sweeping){
 			let targetAngle = this.sweepMidAngle + this.sweepDirection * this.sweepAngle / 2;
-			this.r = moveTowards(this.r, targetAngle, this.sweepSpeed);
+			this.r = moveTowards(this.r, targetAngle, this.sweepSpeed * g_dt);
 			if (floatsEqual(this.r, targetAngle)){
 				this.sweepDirection *= -1;
 			}
 		}
 		
 		if (this.currCooldown > 0){
-			this.currCooldown--;
+			this.currCooldown -= g_dt;
 		}
 		
 		if (this.firing && this.currCooldown <= 0){
@@ -70,7 +72,7 @@ class Gun extends GameObject {
 				const bullet = this.bulletCreateFunction();
 				bullet.x = this.x;
 				bullet.y = this.y;
-				bullet.r = currR;
+				bullet.r = currR + randomRange(-this.angleJitter, this.angleJitter);
 				currR += this.shotgunSpreadAngle / (this.shotgunCount - 1);
 			}
 

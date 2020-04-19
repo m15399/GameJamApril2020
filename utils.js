@@ -1,11 +1,4 @@
 
-let g_startTime = new Date().getTime() / 1000;
-let g_time = g_startTime;
-
-function updateTime(){
-	g_time = (new Date().getTime() / 1000) - g_startTime;
-}
-
 function degreesToRadians(a){
 	return a * Math.PI / 180;
 }
@@ -41,4 +34,18 @@ function moveTowards(a, b, v){
 
 function floatsEqual(a, b){
 	return Math.abs(a - b) < .0001;
+}
+
+function clamp(x, a, b){
+	if (x < a){
+		return a;
+	} else if (x > b){
+		return b;
+	} else {
+		return x;
+	}
+}
+
+function randomRange(a, b){
+	return a + Math.random() * (b - a);
 }
