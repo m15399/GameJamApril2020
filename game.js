@@ -28,9 +28,9 @@ class Game {
 
 		// Clear enemy bullets so you don't die.
 		forAllGameObjectsOfType('Bullet', function(b){
-			if (!b.playerBullet){
+			// if (!b.playerBullet){
 				b.destroy();
-			}
+			// }
 		});
 
 		switch(number){
@@ -46,8 +46,7 @@ class Game {
 			break;
 		case 2:
 			g_music.restart(21.6);
-			const t2 = new Titanic();
-			t2.startTitanicBossScript();
+			const mt = new MechaTitanic();
 			break;
 		case 3:
 			g_music.restart();
