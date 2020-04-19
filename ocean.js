@@ -28,7 +28,9 @@ class Ocean extends GameObject {
       g.fillStyle = this.pattern;
       g.save();
       g.translate(this.x, this.y);
-      g.rect(0, 0, g_canvas.width + 2, g_canvas.height + 2);
+      g.beginPath();
+      g.rect(0, 0, g_canvas.width + 160, g_canvas.height + 160);
+      g.closePath();
       g.fill();
       g.restore();
    }
