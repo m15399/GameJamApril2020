@@ -9,10 +9,10 @@ class EndGameScreen extends Enemy {
 
 		this.script = new Script();
 		const that = this;
-		this.script.after(1, function(){
+		this.script.after(1.5, function(){
 			that.text2 = 'Congrats!';
-		}).after(1, function(){
-			that.text3 = 'B+ I would say.';
+		}).after(1.5, function(){
+			that.text3 = 'B+, I would say.';
 		});
 	}
 
