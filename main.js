@@ -81,4 +81,4 @@ function main(){
 	mainLoop();
 }
 
-window.onload = main;
+// window.onload = main;
