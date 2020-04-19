@@ -18,19 +18,22 @@ class Game {
 
 	startLevel(number){
 
-		if (!this.ocean) {
-			this.ocean = new Ocean();
+		if (number > 0){
+			if (!this.ocean) {
+				this.ocean = new Ocean();
+			}
+
+			if (!this.iceberg){
+				this.iceberg = new Iceberg();
+			}
 		}
 
-		if (!this.iceberg){
-			this.iceberg = new Iceberg();
-		}
 
 		// Clear enemy bullets so you don't die.
 		forAllGameObjectsOfType('Bullet', function(b){
-			if (!b.playerBullet){
+			// if (!b.playerBullet){
 				b.destroy();
-			}
+			// }
 		});
 
 		switch(number){
@@ -46,8 +49,7 @@ class Game {
 			break;
 		case 2:
 			g_music.restart(21.6);
-			const t2 = new Titanic();
-			t2.startTitanicBossScript();
+			const mt = new MechaTitanic();
 			break;
 		case 3:
 			g_music.restart();

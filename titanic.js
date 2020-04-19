@@ -15,13 +15,25 @@ function createBlueBullet(){
 }
 
 class Titanic extends Enemy {
-	constructor(){
+	constructor(size){
 		super();
+
+		if (size == undefined){
+			size = 1;
+		}
+
 		this.x = 0;
 		this.y = 0;
-		this.w = 60;
+		this.w = 60 * size;
 		this.h = this.w * 2;
 		this.r = 0;
+
+		// For MechaTitanic pieces.
+		this.useInitialPlusOffset = false;
+		this.initialX = 0;
+		this.initialY = 0;
+		this.offsetX = 0;
+		this.offsetY = 0;
 
 		this.followTarget = false;
 		this.followTargetSpeed = 0;
@@ -41,7 +53,6 @@ class Titanic extends Enemy {
 	}
 
 	startTitanicBossScript(){
-
 		const that = this;
 		const script = this.script;
 		let gun1, gun2;
@@ -57,7 +68,7 @@ class Titanic extends Enemy {
 
 			that.followTarget = true;
 			that.followTargetSpeed = that.defaultFollowTargetSpeed * .7;
-			that.targetX = that.x;
+			that.targetX = baseX;
 			that.targetY = baseY;
 			g_game.startMildShake(1);
 
@@ -68,7 +79,7 @@ class Titanic extends Enemy {
 
 		}).loopBegin()
 		.after(0, function(){
-			gun1 = new Gun(that, .03, createEnemyBullet);
+			gun1 = new Gun(that, .06, createEnemyBullet);
 			gun1.xOffset = 20;
 			gun1.yOffset = 30;
 			gun1.startSweep(90, 120, 210);
@@ -93,6 +104,28 @@ class Titanic extends Enemy {
 		}).loop();
 	}
 
+	startMiniTitanicScript(){
+		const that = this;
+		const script = this.script;
+		let gun1, gun2;
+
+		script.loopBegin()
+		.after(0, function(){
+			gun1 = new Gun(that, .08, createEnemyBullet);
+			gun1.startSweep(90, 120, 210);
+
+		}).after(5, function(){
+			gun1.destroy();
+
+			gun2 = new Gun(that, .5, createBlueBullet);
+			gun2.startShotgun(12, 135);
+
+		}).after(2, function(){
+			gun2.destroy();
+
+		}).loop();
+	}
+
 	update(){
 		this.script.update();
 
@@ -100,6 +133,9 @@ class Titanic extends Enemy {
 			const maxV = this.followTargetSpeed * g_dt;
 			this.x = moveTowards(this.x, this.targetX, maxV);
 			this.y = moveTowards(this.y, this.targetY, maxV);
+		} else if (this.useInitialPlusOffset){
+			this.x = this.initialX + this.offsetX;
+			this.y = this.initialY + this.offsetY;
 		}
 
 		if (this.health < 0) {
@@ -110,6 +146,7 @@ class Titanic extends Enemy {
 	draw(g){
 		g.save();
 		g.translate(this.x, this.y);
+		g.save();
 		g.rotate(degreesToRadians(this.r));
 
 		// Draw ship.
@@ -135,13 +172,15 @@ class Titanic extends Enemy {
 		}
 
 		g.drawImage(
-			this.hitOverlayCanvas.canvas, 
-			-this.hitOverlayCanvas.width/2, 
-			-this.hitOverlayCanvas.height/2, 
-			this.hitOverlayCanvas.width, 
+			this.hitOverlayCanvas.canvas,
+			-this.hitOverlayCanvas.width/2,
+			-this.hitOverlayCanvas.height/2,
+			this.hitOverlayCanvas.width,
 			this.hitOverlayCanvas.height);
 
-		// Draw hitbox.
+		g.restore();
+
+		// Draw hitbox - note it's not rotated...
 		if (isDebugView()){
 			g.strokeStyle = 'white';
 			g.strokeRect(-this.w/2, -this.h/2, this.w, this.h);

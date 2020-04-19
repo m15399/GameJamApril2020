@@ -11,11 +11,11 @@ class Ocean extends GameObject {
       this.x--;
       this.y--;
 
-      if (this.x < g_canvas.width) {
-         this.x = 0;
+      if (this.x < -80) {
+         this.x += 80;
       }
-      if (this.y > g_canvas.height) {
-         this.y = 0;
+      if (this.y < -80) {
+         this.y += 80;
       }
    }
 
@@ -25,7 +25,7 @@ class Ocean extends GameObject {
       g.fillStyle = this.pattern;
       g.save();
       g.translate(this.x, this.y);
-      g.rect(0, 0, g_canvas.width, g_canvas.height);
+      g.rect(0, 0, g_canvas.width + 2, g_canvas.height + 2);
       g.fill();
       g.restore();
    }
