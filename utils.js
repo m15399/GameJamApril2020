@@ -27,3 +27,18 @@ function collided(rect1, rect2) {
 function onscreen(rect){
 	return collided(g_canvas, rect);
 }
+
+function moveTowards(a, b, v){
+	let delta = b - a;
+	if (Math.abs(delta) <= v){
+		return b;
+	} else if (delta < 0) {
+		return a - v;
+	} else {
+		return a + v;
+	}
+}
+
+function floatsEqual(a, b){
+	return Math.abs(a - b) < .0001;
+}

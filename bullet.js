@@ -13,7 +13,11 @@ class Bullet extends GameObject {
 	}
 
 	update(){
-		this.y += this.v;
+		const rads = degreesToRadians(this.r);
+		const xv = Math.cos(rads) * this.v;
+		const yv = Math.sin(rads) * this.v;
+		this.x += xv;
+		this.y += yv;
 
 		if (!onscreen(this)) {
 			this.destroy();
