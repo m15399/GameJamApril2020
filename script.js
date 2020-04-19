@@ -20,8 +20,8 @@ class Script {
 		this.currDelay = 0;
 	}
 
-	after(delay, func, id){
-		this.steps.push({delay: delay, func: func, id: id});
+	after(delay, func){
+		this.steps.push({delay: delay, func: func});
 		return this;
 	}
 

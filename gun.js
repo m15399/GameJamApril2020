@@ -1,4 +1,5 @@
 
+
 class Gun extends GameObject {
 	constructor(parentObject, cooldown, bulletCreateFunction){
 		super();
@@ -61,10 +62,9 @@ class Gun extends GameObject {
 			}
 		}
 		
-		if (this.currCooldown > 0){
-			this.currCooldown -= g_dt;
-		}
-		
+		this.currCooldown -= g_dt;
+		this.currCooldown = Math.max(this.currCooldown, 0);
+
 		if (this.firing && this.currCooldown <= 0){
 			
 			let currR = this.r - this.shotgunSpreadAngle / 2;

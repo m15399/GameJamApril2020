@@ -56,9 +56,7 @@ class Titanic extends GameObject {
 			that.followTargetSpeed = that.defaultFollowTargetSpeed;
 
 		}).loopBegin()
-		.after(0, function(){
-			// console.log('shooting stuff!');
-		}).after(.5, function(){
+		.after(.5, function(){
 			gun1 = new Gun(that, .03, createEnemyBullet);
 			gun1.xOffset = 20;
 			gun1.yOffset = 30;
