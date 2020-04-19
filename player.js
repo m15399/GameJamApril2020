@@ -53,14 +53,14 @@ class Iceberg extends GameObject {
 		const imageWidth = 45;
 		g.drawImage(
 			this.sprite,
-			this.x - imageWidth/2,
-			this.y - imageWidth/2 - imageWidth/4,
+			this.x - imageWidth/2 + imageWidth * -.05,
+			this.y - imageWidth/2 + imageWidth * -.15,
 			imageWidth,
 			imageWidth);
 		
 		// Hitbox.
-		// g.fillStyle = 'white';
-		// g.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+		g.strokeStyle = 'white';
+		// g.strokeRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
 	}
 
 	hit(){

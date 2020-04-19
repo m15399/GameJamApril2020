@@ -13,6 +13,8 @@ function mainLoop(){
 	g_dt = g_time - lastTime;
 	g_dt = clamp(g_dt, 0, 1/10);
 
+	g_music.update();
+
 	const g = g_canvas.context;
 
 	if (loadingResources){
@@ -27,6 +29,9 @@ function mainLoop(){
 
 		if (g_resources.numLoaded == g_resources.numResources){
 			loadingResources = false;
+
+			// Start the game!
+			g_music.start();
 			g_game.startLevel1();
 		}
 
@@ -59,6 +64,8 @@ function main(){
 	//new MechaTitanic();
 
 	g_resources.loadImage('berg.png');
+	g_resources.loadImage('titanic.png');
+	g_resources.loadAudio('music.mp3');
 
 	mainLoop();
 }
