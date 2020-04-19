@@ -4,7 +4,7 @@ class Iceberg extends GameObject {
 		super();
 		this.x = g_canvas.width / 2;
 		this.y = g_canvas.height - 100;
-		this.w = 40;
+		this.w = 35;
 		this.h = this.w;
 
 		this.health = 100;

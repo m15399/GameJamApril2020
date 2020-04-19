@@ -41,7 +41,7 @@ class Titanic extends Enemy {
 		this.targetX = 0;
 		this.targetY = 0;
 
-		this.health = 100;
+		this.health = 2000;
 		this.hitThisFrame = false;
 
 		this.sprite = g_resources.get('titanic.png');
