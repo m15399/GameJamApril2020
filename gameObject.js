@@ -16,13 +16,16 @@ class GameObject {
 
 	// Overridden by subclasses.
 	update(){
-
 	}
 
 	// Overridden by subclasses.
 	draw(g){
-
 	}
+
+	// Overridden by subclasses: react to the actual destruction between frames.
+	onDestroy(){
+	}
+
 }
 
 
@@ -31,14 +34,12 @@ const g_allGameObjects = new Set();
 let newGameObjects = [];
 let deletedGameObjects = [];
 
-function forObjectsOfType(className, func){
+function forAllGameObjectsOfType(className, func){
 	g_allGameObjects.forEach((o) => {
-		const className = o.constructor.name;
 		if (o.constructor.name == className){
 			func(o);
 		}
 	});
-	console.log(numGuns);
 }
 
 function updateAllGameObjects(){
@@ -52,6 +53,7 @@ function updateAllGameObjects(){
 	// Delete deleted game objects.
 	for(let i = 0; i < deletedGameObjects.length; i++){
 		g_allGameObjects.delete(deletedGameObjects[i]);
+		deletedGameObjects[i].onDestroy();
 	}
 	deletedGameObjects = [];
 

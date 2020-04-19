@@ -15,6 +15,11 @@ function mainLoop(){
 
 	g_music.update();
 
+	if (g_game.frameFreeze > 0){
+		g_dt = 1/60/1000;
+		g_game.frameFreeze--;
+	}
+
 	const g = g_canvas.context;
 
 	if (loadingResources){
@@ -32,34 +37,34 @@ function mainLoop(){
 
 			// Start the game!
 			g_music.start();
-			g_game.startLevel1();
+			g_game.startLevel(0);
 		}
 
 	} else {
 
 		updateAllGameObjects();
+		g_game.update();
 
 		// Clear screen.
 		g.fillStyle = '#14a';
 		g.fillRect(0, 0, g_canvas.width, g_canvas.height);
 
+		g_game.preDraw(g);
+
 		drawAllGameObjects(g);
 
-		// Have to do this here to draw after everything else...
-		if (g_game.iceberg && g_game.iceberg.hitThisFrame){
-			g_game.iceberg.hitThisFrame = false;
-
-			g.fillStyle = 'rgba(255, 155, 155, .5)';
-			g.fillRect(0, 0, g_canvas.width, g_canvas.height);
-		}
+		g_game.postDraw(g);
 	}
+
+	g_input.update();
 
 	lastTime = g_time;
 	window.requestAnimationFrame(mainLoop);
 }
 
 function main(){
-	g_canvas.appendToDocument();
+	const gameContainer = document.getElementById('game');
+	g_canvas.appendToDocument(gameContainer);
 
 	//new MechaTitanic();
 
